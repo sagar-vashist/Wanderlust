@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
-    "build": "npx prisma generate",
+    "build": "node node_modules/prisma/build/index.js generate",
     "db:seed": "node init/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
