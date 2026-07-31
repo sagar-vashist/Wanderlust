@@ -5,7 +5,6 @@
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
-    "postinstall": "prisma generate",
     "build": "prisma generate",
     "db:seed": "node init/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -32,9 +31,7 @@
     "multer": "^2.2.0",
     "multer-storage-cloudinary": "^4.0.0",
     "passport": "^0.7.0",
-    "passport-local": "^1.0.0"
-  },
-  "devDependencies": {
+    "passport-local": "^1.0.0",
     "prisma": "^5.22.0"
   }
 }
