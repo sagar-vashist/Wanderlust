@@ -1,0 +1,54 @@
+#filters {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+}
+.filter {
+    text-align: center;
+    margin-right: 2rem;
+    margin-top: 2rem;
+    opacity: 0.65;
+}
+.filter:hover {
+    opacity: 1;
+    cursor: pointer;
+}
+.filter p {
+    font-size: 0.8rem;
+}
+.tax-info {
+    display: none;
+}
+.tax-toggle {
+    border: 1px solid black;
+    border-radius: 1rem;
+    padding: 0.75rem 1rem;
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+@media (max-width: 576px) {
+.listing-card img {
+    height: 15rem !important;
+}
+}
+
+#filters {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+}
+
+.tax-toggle {
+    margin-left: 1rem;
+    padding: 0.5rem 0.75rem;
+    height: auto;
+    flex-shrink: 0;
+}
+
+.tax-toggle .form-check-label {
+    font-size: 0.8rem;
+    white-space: nowrap;
+}

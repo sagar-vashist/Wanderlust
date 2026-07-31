@@ -1,0 +1,120 @@
+<link rel="stylesheet" href="/css/navbar.css" />
+<nav class="navbar navbar-expand-md navbar-light bg-body-light border-bottom sticky-top">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/listings"><i class="fa-regular fa-compass"></i></a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+
+      <div class="navbar-nav">
+        <a class="nav-link" href="/listings" ><b>Explore</b></a>
+      </div>
+
+      <div class="navbar-nav ms-auto">
+        <div class="dropdown position-relative">
+          <input
+            class="form-control search-inp"
+            type="search"
+            id="destSearch"
+            placeholder="Search Destinations"
+            autocomplete="off"
+          />
+          <ul class="dropdown-menu dropdown-menu-dark w-100" id="destDropdown"></ul>
+        </div>
+        <button class="btn search-btn" id="searchBtn" type="submit">
+          <i class="fa-solid fa-magnifying-glass"></i> Search
+        </button>
+      </div>
+
+      <div class="navbar-nav ms-auto">
+        <a class="nav-link" href="/listings/new"><b>Become a host</b></a>
+        <% if(!currUser){ %>
+          <a class="nav-link" href="/signup"><b>Sign up</b></a>
+          <a class="nav-link" href="/login"><b>Log in</b></a>
+        <% } %>
+
+        <% if(currUser){ %>
+          <a class="nav-link" href="/logout"><b>Log out</b></a>
+        <% } %>
+      </div>
+
+    </div>
+  </div>
+</nav>
+
+<script>
+  let destinations = [];
+
+  async function loadDestinations() {
+    try {
+      const res = await fetch('/listings/api/destinations');
+      destinations = await res.json();
+    } catch (err) {
+      console.error('Failed to load destinations:', err);
+    }
+  }
+
+  loadDestinations();
+
+  const input = document.getElementById('destSearch');
+  const menu = document.getElementById('destDropdown');
+  const btn = document.getElementById('searchBtn');
+
+  function renderMenu(filter) {
+    const query = filter.toLowerCase().trim();
+    const matches = destinations.filter(d => d.toLowerCase().includes(query));
+
+    menu.innerHTML = '';
+    if (matches.length === 0) {
+      menu.classList.remove('show');
+      return;
+    }
+
+    matches.forEach(name => {
+      const li = document.createElement('li');
+      const a = document.createElement('a');
+      a.className = 'dropdown-item';
+      a.href = '#';
+      a.textContent = name;
+      a.addEventListener('click', (e) => {
+        e.preventDefault();
+        input.value = name;
+        menu.classList.remove('show');
+      });
+      li.appendChild(a);
+      menu.appendChild(li);
+    });
+
+    menu.classList.add('show');
+  }
+
+  input.addEventListener('input', () => renderMenu(input.value));
+  input.addEventListener('focus', () => renderMenu(input.value));
+
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('#destSearch') && !e.target.closest('#destDropdown')) {
+      menu.classList.remove('show');
+    }
+  });
+
+  function performSearch() {
+    const query = input.value.trim();
+    if (query) {
+      window.location.href = `/listings/search?query=${encodeURIComponent(query)}`;
+    }
+  }
+
+  btn.addEventListener('click', (e) => {
+    e.preventDefault();
+    menu.classList.remove('show');
+    performSearch();
+  });
+
+  input.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      performSearch();
+    }
+  });
+</script>
