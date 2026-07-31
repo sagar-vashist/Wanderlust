@@ -5,14 +5,19 @@ import {
   Popup,
 } from "https://cdn.skypack.dev/maplibre-gl";
 
-var myAPIKey = mapToken;
+var myAPIKey = (typeof mapToken !== "undefined" && mapToken) ? mapToken : "91a747defc6d451299a4bc539e931e81";
+
+var mapCoords = (typeof coordinates !== "undefined" && Array.isArray(coordinates) && coordinates.length === 2 && (coordinates[0] !== 0 || coordinates[1] !== 0))
+  ? coordinates
+  : [77.2090, 28.6139];
 
 var map = new Map({
   container: "my-map",
   style: `https://maps.geoapify.com/v1/styles/osm-carto/style.json?apiKey=${myAPIKey}`,
-  center: coordinates,
+  center: mapCoords,
   zoom: 9,
 });
+
 map.addControl(new NavigationControl());
 
 const popup = new Popup({ offset: 25 }).setHTML(`
@@ -21,6 +26,6 @@ const popup = new Popup({ offset: 25 }).setHTML(`
 `);
 
 const marker = new Marker({ color: "red" })
-  .setLngLat(coordinates)
+  .setLngLat(mapCoords)
   .setPopup(popup)
   .addTo(map);
