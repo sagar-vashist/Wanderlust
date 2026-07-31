@@ -1,9 +1,14 @@
 {
   "version": 2,
-  "rewrites": [
+  "functions": {
+    "app.js": {
+      "includeFiles": "views/**:public/**"
+    }
+  },
+  "routes": [
     {
-      "source": "/(.*)",
-      "destination": "/app.js"
+      "src": "/(.*)",
+      "dest": "app.js"
     }
   ]
 }
