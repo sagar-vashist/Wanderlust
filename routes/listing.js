@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const wrapAsync = require("../utils/wrapAsync.js");
 const Listing = require("../models/listing.js");
-const { isLoggedIn, isOwner, validateListing } = require("../middleware.js");
+const { isLoggedIn, isOwner, validateListing } = require("../appMiddleware.js");
 // const { populate } = require("../models/user.js");
 //using "../" coz listing.js routes folder ke andr hai aur app.js es folder ke bhar hai
 const listingController = require("../controllers/listings.js");
