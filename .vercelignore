@@ -1,0 +1,2 @@
+# Tell Vercel not to parse public static assets as backend Node functions
+public/
