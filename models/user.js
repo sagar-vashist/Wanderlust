@@ -3,8 +3,9 @@ const bcrypt = require("bcryptjs");
 
 function formatUser(user) {
   if (!user) return null;
+  const { password, ...safeUser } = user;
   return {
-    ...user,
+    ...safeUser,
     _id: user.id,
   };
 }
@@ -58,6 +59,14 @@ const User = {
     });
 
     return formatUser(createdUser);
+  },
+
+  async deleteAccount(id) {
+    if (!id) return null;
+    const deletedUser = await prisma.user.delete({
+      where: { id: String(id) },
+    });
+    return formatUser(deletedUser);
   },
 
   authenticate() {

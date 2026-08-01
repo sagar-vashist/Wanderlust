@@ -10,7 +10,6 @@ module.exports.signup = async (req, res, next) => {
     const newUser = { email, username };
     const registeredUser = await User.register(newUser, password);
     req.login(registeredUser, (err) => {
-      // auto login after signup
       if (err) {
         return next(err);
       }
@@ -41,4 +40,19 @@ module.exports.logout = (req, res, next) => {
     req.flash("success", "You are logged out!");
     res.redirect("/listings");
   });
+};
+
+module.exports.deleteAccount = async (req, res, next) => {
+  try {
+    const userId = req.user._id || req.user.id;
+    await User.deleteAccount(userId);
+    req.logout((err) => {
+      if (err) return next(err);
+      req.flash("success", "Your account and associated data have been permanently deleted.");
+      res.redirect("/listings");
+    });
+  } catch (e) {
+    req.flash("error", "Failed to delete account: " + e.message);
+    res.redirect("/listings");
+  }
 };
