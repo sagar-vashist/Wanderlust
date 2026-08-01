@@ -11,7 +11,7 @@
   const coordinates = <%- JSON.stringify((listing.geometry && listing.geometry.coordinates && listing.geometry.coordinates.length === 2 && (listing.geometry.coordinates[0] !== 0 || listing.geometry.coordinates[1] !== 0)) ? listing.geometry.coordinates : [77.2090, 28.6139]) %>;
 </script>
 <div class="row">
-    <div class="col-8 offset-3">
+    <div class="col-12 text-center">
       <h3><%= listing.title %></h3>
     </div>
 
@@ -36,7 +36,7 @@
 
     </div>
     <% } %>
-  <div class="col-8 offset-3 mb-3">
+  <div class="col-lg-6 col-md-8 col-12 mx-auto mb-3">
    
     <% if(currUser){ %>
     <hr>
@@ -87,7 +87,7 @@
     <% } %>   
   </div>
   <!-- map -->
-    <div class="col-8 offset-3 mb-3">
+    <div class="col-lg-6 col-md-8 col-12 mx-auto mb-3">
       <h3>Where you'll be</h3>
       <div id="my-map" style="height: 400px; width: 100%; border-radius: 12px; margin-top: 1rem;"></div>
     </div>
