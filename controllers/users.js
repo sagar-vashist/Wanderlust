@@ -9,7 +9,6 @@ module.exports.signup = async (req, res, next) => {
     let { username, email, password } = req.body;
     const newUser = { email, username };
     const registeredUser = await User.register(newUser, password);
-    console.log(registeredUser);
     req.login(registeredUser, (err) => {
       // auto login after signup
       if (err) {

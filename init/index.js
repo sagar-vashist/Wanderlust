@@ -8,7 +8,8 @@ const initData = require("./data.js");
 const User = require("../models/user.js");
 const axios = require("axios");
 
-const mapToken = process.env.MAP_TOKEN || "91a747defc6d451299a4bc539e931e81";
+const mapToken = process.env.MAP_TOKEN;
+const seedOwnerPassword = process.env.SEED_OWNER_PASSWORD || process.env.SECRET || "demo_owner_pass";
 
 const initDB = async () => {
   try {
@@ -24,7 +25,7 @@ const initDB = async () => {
         username: "demo_owner",
         email: "owner@wanderlust.com",
       },
-      "ownerpassword123"
+      seedOwnerPassword
     );
 
     console.log("Seeding listings with exact geocoded coordinates...");
@@ -36,17 +37,19 @@ const initDB = async () => {
       let longitude = 77.2090;
       let latitude = 28.6139;
 
-      try {
-        const queryText = `${obj.location}, ${obj.country}`;
-        const geoUrl = `https://api.geoapify.com/v1/geocode/search?text=${encodeURIComponent(queryText)}&apiKey=${mapToken}`;
-        const res = await axios.get(geoUrl);
-        if (res.data && res.data.features && res.data.features.length > 0) {
-          const coords = res.data.features[0].geometry.coordinates;
-          longitude = coords[0];
-          latitude = coords[1];
+      if (mapToken) {
+        try {
+          const queryText = `${obj.location}, ${obj.country}`;
+          const geoUrl = `https://api.geoapify.com/v1/geocode/search?text=${encodeURIComponent(queryText)}&apiKey=${mapToken}`;
+          const res = await axios.get(geoUrl);
+          if (res.data && res.data.features && res.data.features.length > 0) {
+            const coords = res.data.features[0].geometry.coordinates;
+            longitude = coords[0];
+            latitude = coords[1];
+          }
+        } catch (e) {
+          console.warn(`Geocoding fallback for ${obj.location}, ${obj.country}`);
         }
-      } catch (e) {
-        console.warn(`Geocoding fallback for ${obj.location}, ${obj.country}`);
       }
 
       await prisma.listing.create({

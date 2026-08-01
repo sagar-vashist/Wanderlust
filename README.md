@@ -9,6 +9,12 @@ A full-featured travel & property listing web application built with **Node.js**
 - **Session Management**: Session store with Prisma & PostgreSQL.
 - **Deployment**: Ready for free hosting on Vercel with PostgreSQL databases like Supabase or Neon.
 
+## ⚠️ Security Notice & Secret Rotation Warning
+> [!WARNING]
+> If any API keys, database connection strings, Cloudinary credentials, or session secrets were previously hardcoded or committed to git history prior to secret cleanup, **those credentials remain accessible in Git commit history**.
+> 
+> **Immediate Action Required**: Rotate all credentials (Cloudinary API secrets, Geoapify tokens, Database passwords, Session secrets) in their respective provider consoles immediately to ensure full security.
+
 ## Setup Instructions
 
 1. **Install Dependencies**:

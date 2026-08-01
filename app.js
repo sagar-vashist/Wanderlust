@@ -42,7 +42,7 @@ const sessionOptions = {
     checkPeriod: 2 * 60 * 1000,
     dbRecordIdIsSessionId: true,
   }),
-  secret: process.env.SECRET || "mysupersecretcode",
+  secret: process.env.SECRET || "development_secret_key",
   resave: false,
   saveUninitialized: false,
   cookie: {

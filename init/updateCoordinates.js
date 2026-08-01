@@ -6,9 +6,14 @@ if (process.env.NODE_ENV !== "production") {
 const prisma = require("../db.js");
 const axios = require("axios");
 
-const mapToken = process.env.MAP_TOKEN || "91a747defc6d451299a4bc539e931e81";
+const mapToken = process.env.MAP_TOKEN;
 
 async function updateListingCoordinates() {
+  if (!mapToken) {
+    console.error("MAP_TOKEN environment variable is required to geocode coordinates.");
+    process.exit(1);
+  }
+
   try {
     console.log("Fetching all listings from database...");
     const listings = await prisma.listing.findMany();

@@ -17,18 +17,15 @@ function initMap() {
     return;
   }
 
-  var myAPIKey =
-    typeof mapToken !== "undefined" && mapToken && mapToken.trim() !== ""
-      ? mapToken
-      : "91a747defc6d451299a4bc539e931e81";
+  var myAPIKey = (typeof mapToken !== "undefined" && mapToken) ? mapToken.trim() : "";
 
-  var primaryStyle = `https://maps.geoapify.com/v1/styles/osm-carto/style.json?apiKey=${myAPIKey}`;
-  var fallbackStyle =
-    "https://basemaps.cartocdn.com/gl/positron-gl-style/style.json";
+  var styleUrl = myAPIKey
+    ? `https://maps.geoapify.com/v1/styles/osm-carto/style.json?apiKey=${myAPIKey}`
+    : "https://basemaps.cartocdn.com/gl/positron-gl-style/style.json";
 
   var map = new maplibregl.Map({
     container: "my-map",
-    style: fallbackStyle,
+    style: styleUrl,
     center: mapCoords,
     zoom: 12,
   });
