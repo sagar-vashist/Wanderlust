@@ -4,6 +4,9 @@ if (process.env.NODE_ENV !== "production") {
 
 const express = require("express");
 const app = express();
+
+// Trust Vercel / Reverse Proxy headers for HTTPS session cookies & Rate Limiting
+app.set("trust proxy", 1);
 const path = require("path");
 const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
